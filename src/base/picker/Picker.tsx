@@ -33,6 +33,7 @@ export type PickerProps<ItemT extends PickerItem<any>> = {
   width?: number | 'auto' | `${number}%`;
   readOnly?: boolean;
   testID?: string;
+  customHeight?:number;
 
   onValueChanging?: OnValueChanging<ItemT>;
   onValueChanged?: OnValueChanged<ItemT>;
@@ -86,6 +87,8 @@ const Picker = <ItemT extends PickerItem<any>>({
   visibleItemCount = 5,
   readOnly = false,
   testID,
+  customHeight,
+
 
   onValueChanged,
   onValueChanging,
@@ -110,7 +113,7 @@ const Picker = <ItemT extends PickerItem<any>>({
 
   const [faces, pickerHeight] = useMemo(() => {
     const items = createFaces(itemHeight, visibleItemCount);
-    const height = calcPickerHeight(items, itemHeight);
+    const height = customHeight ?? calcPickerHeight(items, itemHeight);
     return [items, height];
   }, [itemHeight, visibleItemCount]);
   const renderPickerItem = useCallback<RenderPickerItem<ItemT>>(
